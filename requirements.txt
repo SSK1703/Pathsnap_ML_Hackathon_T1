@@ -11,6 +11,8 @@ scipy>=1.13
 # Machine Learning
 scikit-learn>=1.5
 optuna>=4.0
+xgboost>=2.0
+pyarrow>=14.0
 
 # Geospatial processing
 geopandas>=1.0
