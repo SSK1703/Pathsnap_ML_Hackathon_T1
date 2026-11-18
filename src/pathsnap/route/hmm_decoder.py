@@ -203,7 +203,7 @@ class HMMRouteDecoder:
                 "Model must contain exactly one positive class labelled 1"
             )
 
-        X = candidate_df[FEATURE_COLS]
+        X = candidate_df[FEATURE_COLS].to_numpy(dtype=float)
 
         probs = model.predict_proba(X)[
             :, class_indices[0]

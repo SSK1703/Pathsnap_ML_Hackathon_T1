@@ -116,6 +116,6 @@ def preprocess_trip(trip):
         "speed": speed,
         "heading": heading,
         "arcs": trip["arcs"],
-        "route": trip["route"],
+        "route": trip.get("route"),
         "reference": (ref_lon, ref_lat),
     }
