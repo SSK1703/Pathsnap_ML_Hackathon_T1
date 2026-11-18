@@ -28,6 +28,10 @@ class EvaluationMetrics(BaseModel):
 class PredictionResponse(BaseModel):
     trip_id: str
     predicted_arc_ids: list[int]
+    gps_points: list[list[float]] = Field(default_factory=list)
+    predicted_route_segments: list[list[list[float]]] = Field(
+        default_factory=list
+    )
     metrics: Optional[EvaluationMetrics] = None
     processing_time_seconds: float
     message: str

@@ -163,6 +163,8 @@ def predict(request: PredictionRequest):
     return PredictionResponse(
         trip_id=request.trip_id,
         predicted_arc_ids=result["predicted_arc_ids"],
+        gps_points=result["gps_points"],
+        predicted_route_segments=result["predicted_route_segments"],
         metrics=result.get("metrics"),
         processing_time_seconds=elapsed,
         message="Prediction completed successfully."

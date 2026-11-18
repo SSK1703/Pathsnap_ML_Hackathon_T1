@@ -166,10 +166,7 @@ if result and result["trip_id"] == selected_trip:
         result["predicted_arc_ids"]
     )
 
-    display_map()
-
-    st.info(
-        "The map will display the actual GPS and predicted "
-        "route geometry once the geographical response "
-        "is integrated."
+    display_map(
+        gps_points=result.get("gps_points"),
+        predicted_route=result.get("predicted_route_segments"),
     )
