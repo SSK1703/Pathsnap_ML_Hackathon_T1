@@ -101,3 +101,32 @@ scripts/          Executable scripts
 tests/            Unit tests
 reports/          Report assets
 artifacts/        Final model artifacts
+```
+
+## 5. Model Experiments
+
+Install the project dependencies and make the package importable:
+
+```bash
+python -m pip install -r requirements.txt
+python -m pip install -e .
+```
+
+Place the training and student-test trip folders under
+`src/pathsnap/data/raw/train/` and `src/pathsnap/data/raw/student_test/`.
+Then build candidates and run the five model comparison:
+
+```bash
+python scripts/build_dataset.py
+python scripts/train_models.py
+```
+
+The training pipeline evaluates using five-fold `GroupKFold` by trip. It
+reports student-test metrics only when the processed student-test file has
+`is_match` labels; otherwise it reports inference time without labeling the
+test set. Bayesian Random Forest tuning can be run with
+`python scripts/optuna_search.py`.
+
+The notebook `notebooks/02_model_experimentation.ipynb` contains the
+interactive comparison. Processed data and trained model artifacts are
+generated locally and should not be committed.
