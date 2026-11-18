@@ -15,7 +15,10 @@ class TripRegistry:
                 f"Trip manifest not found: {self.manifest_path}"
             )
 
-        df = pd.read_csv(self.manifest_path)
+        df = pd.read_csv(
+           self.manifest_path,
+           dtype={"trip_id": str}
+        )
 
         required = {"trip_id", "track_path"}
         if not required.issubset(df.columns):
@@ -29,7 +32,12 @@ class TripRegistry:
         if df["trip_id"].isna().any():
             raise ValueError("Trip IDs cannot be missing.")
 
-        df["trip_id"] = df["trip_id"].astype(str).str.strip()
+        df["trip_id"] = (
+           df["trip_id"]
+           .astype(str)
+           .str.strip()
+           .str.zfill(8)
+        )
 
         if (df["trip_id"] == "").any():
             raise ValueError("Trip IDs cannot be empty.")

@@ -24,7 +24,22 @@ load_dotenv(PROJECT_ROOT / ".env")
 DATA_ROOT = PROJECT_ROOT / "src" / "pathsnap" / "data"
 
 # Evaluator trip manifest
-MANIFEST_PATH = DATA_ROOT / "evaluator_trip_manifest.csv"
+DATA_PARTITION = os.getenv(
+    "PATHSNAP_DATA_PARTITION",
+    "student_test"
+).strip()
+
+MANIFESTS = {
+    "student_test": DATA_ROOT / "student_test_trip_manifest.csv",
+    "evaluator_test": DATA_ROOT / "evaluator_trip_manifest.csv",
+}
+
+if DATA_PARTITION not in MANIFESTS:
+    raise ValueError(
+        f"Invalid PATHSNAP_DATA_PARTITION: {DATA_PARTITION}"
+    )
+
+MANIFEST_PATH = MANIFESTS[DATA_PARTITION]
 
 app = FastAPI(
     title="PathSnap API",
@@ -105,28 +120,20 @@ def get_trips():
     tags=["Prediction"]
 )
 def predict(request: PredictionRequest):
-
     try:
-        trip = registry.get_trip(request.trip_id)
+        track_path = registry.get_trip(request.trip_id)
 
     except KeyError:
-
         raise HTTPException(
             status_code=404,
             detail="Trip not found."
         )
 
     except (FileNotFoundError, ValueError) as error:
-
         raise HTTPException(
             status_code=503,
             detail=str(error)
         )
-
-    track_path = Path(trip["track_path"])
-
-    if not track_path.is_absolute():
-        track_path = PROJECT_ROOT / track_path
 
     if not track_path.is_file():
         raise HTTPException(
@@ -137,19 +144,15 @@ def predict(request: PredictionRequest):
     if not pipeline.is_ready:
         raise HTTPException(
             status_code=503,
-            detail="Prediction pipeline is not integrated yet."
+            detail="Prediction pipeline is not ready."
         )
 
     start_time = time.perf_counter()
 
     try:
-
-        result = pipeline.predict(
-            trip_data=track_path
-        )
+        result = pipeline.predict(trip_data=track_path)
 
     except Exception as error:
-
         raise HTTPException(
             status_code=500,
             detail=f"Prediction failed: {error}"
