@@ -1,0 +1,2 @@
+Model,Algorithm Family,Best Parameters,Tuning CV Macro F1 (10% sample),Training Rows,Training Trips,Student-Test Rows,Student-Test Macro F1,Student-Test Top-1 Accuracy,Training Time (seconds),Inference Time (seconds)
+Random Forest - Bayesian Tuned,Ensemble,"{""n_estimators"": 75, ""max_depth"": 16, ""min_samples_split"": 20, ""min_samples_leaf"": 8, ""max_features"": ""sqrt""}",0.8398891139871439,1839390,80,191600,N/A (unlabeled),N/A (unlabeled),83.4,1.0

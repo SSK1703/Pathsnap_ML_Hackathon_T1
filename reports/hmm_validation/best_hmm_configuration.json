@@ -1,0 +1,9 @@
+{
+    "name": "same_preferred",
+    "p_same": 0.75,
+    "p_connected": 0.5,
+    "p_disconnected": 0.05,
+    "validation_micro_accuracy": 0.8262699753150579,
+    "validation_macro_accuracy": 0.8618323873733938,
+    "validation_continuity": 0.9889963477047905
+}
