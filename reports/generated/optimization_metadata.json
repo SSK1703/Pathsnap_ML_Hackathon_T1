@@ -1,0 +1,13 @@
+{
+    "optimizer": "Optuna TPESampler",
+    "objective": "Mean 3-fold GroupKFold Macro F1",
+    "grouping": "trip_id",
+    "trials": 8,
+    "sampling_fraction_per_trip": 0.1,
+    "original_training_rows": 1839390,
+    "tuning_rows": 183960,
+    "training_trips": 80,
+    "baseline_cv_macro_f1": 0.8348827394931733,
+    "best_cv_macro_f1": 0.8398891139871439,
+    "optimization_time_seconds": 71.5598680973053
+}
